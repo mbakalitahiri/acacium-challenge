@@ -1,0 +1,62 @@
+ <div class="products" *ngIf="movies  as movies; else cargando">
+
+   <div class="row">
+     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+       <select class="form-select my-2 dropdown" aria-label="Default select example" [(ngModel)]="selected" (change)="onChange(selected)">
+         <option value="title" seleted>Title</option>
+         <option value="release_date">Year</option>
+         <option value="rate">Rate</option>
+         <option value="popularity">Popularity</option>
+       </select>
+     </div>
+     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-8 ">
+
+       <ul class="pagination justify-content-end">
+         <button class="btn btn-primary btn-nav" [disabled]="pageNum ==1" name="prev"> Prev</button>
+         <button class="btn btn-primary btn-nav" (click)="onClickNextPage()"> Next</button>
+       </ul>
+
+     </div>
+   </div>
+
+   <div class="row my-3">
+     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 align-items-stretch" *ngFor="let movie of movies">
+
+       <div class="card my-1">
+         <img src="https://image.tmdb.org/t/p/w300/{{ movie.poster_path }}" class="card-img-top" alt="...">
+         <div class="card-body">
+           <h5 class="card-title tex-center">
+             {{ movie.title | slice:0:18 }}
+           </h5>
+           <h6 class="card-title tex-center">
+             {{ movie.release_date | date : "MMM  y" }}
+           </h6>
+           <h6>
+             <app-rating [rating]="movie.vote_average"></app-rating>
+           </h6>
+           <h6>{{movie.popularity | number}}</h6>
+         </div>
+
+         <div class="card-body">
+           <button class="w-100 btn btn-lg btn-outline-primary" [routerLink]="['/movies-details', movie.id]">
+             More Details
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <ng-template #cargando>
+   <div *ngIf="error$ | async; else loadingNoError">
+     <strong>Sorry, something went wrong, Please contact your administrator.
+     </strong>
+   </div>
+ </ng-template>
+
+ <ng-template #loadingNoError>
+   <div class="lds-ripple">
+     <h1>Loading...</h1>
+     <div class="lds-dual-ring"></div>
+   </div>
+ </ng-template> -->

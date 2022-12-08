@@ -1,0 +1,5 @@
+<div class="rating">
+  <i class="fa fa-star" aria-hidden="true" *ngFor="let order of numSequence()"></i>
+  <i class="fa fa-star-half-o" *ngIf="rating != numSequence().length"></i>
+  <span class="rating-value">{{rating}}</span>
+</div>

@@ -1,0 +1,85 @@
+<div class="products" *ngIf="movie$ | async as movie; else cargando">
+  <div class="row my-3">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
+      <div class="card">
+        <img class="card-img-top mx-auto d-block" src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" />
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-8">
+      <div class="card-inner">
+        <span class="title">
+          {{ movie.title }}</span>
+        <div class="header">
+          <button type="button" class="btn btn-primary my-1">
+            {{ movie.release_date | date : "MMM  y" }}
+          </button>
+        </div>
+
+        <app-rating [rating]="movie.vote_average"></app-rating>
+
+        <p class="popularity">
+          Popularity:
+          {{ movie.popularity | number }}
+        </p>
+        <button *ngFor="let genre of movie.genres" class="btn btn-primary genero">
+          {{ genre?.['name']  }}
+        </button>
+      </div>
+      <p>
+        {{ movie.overview }}
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<!--Related-->
+<h1>Related Movies</h1>
+
+<div class="row my-3" *ngIf="relatedMovies as movies; else cargando">
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" *ngFor="let movie of movies">
+
+    <div class="card my-1">
+      <img src="https://image.tmdb.org/t/p/w300/{{ movie.poster_path }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title tex-center">
+          {{ movie.title | slice:0:18 }}
+          [
+          {{ movie.release_date | date : "MMM  y" }}]
+          Popularity:
+          {{ movie.popularity | number }}
+
+
+        </h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <app-rating [rating]="movie.vote_average"></app-rating>
+
+        </li>
+
+
+      </ul>
+      <div class="card-body">
+        <button class="w-100 btn btn-lg btn-outline-primary" (click)="navigateTo(movie.id)">
+          More Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--end Related-->
+
+<ng-template #cargando>
+  <div *ngIf="error$ | async; else loadingNoError">
+    <strong>sorry try later</strong>
+  </div>
+</ng-template>
+
+<ng-template #loadingNoError>
+  <div class="lds-ripple">
+    <h1>Loading...</h1>
+    <div class="lds-dual-ring"></div>
+  </div>
+</ng-template>
