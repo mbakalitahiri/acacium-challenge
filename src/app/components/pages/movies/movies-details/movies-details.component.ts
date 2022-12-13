@@ -1,8 +1,8 @@
-import { MovieInterface } from './../../../../shared/components/interfaces/movie.interface';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { map, pipe, Subject, switchMap, take, tap, Observable } from 'rxjs';
+import { map, Observable, Subject, switchMap, take } from 'rxjs';
 
+import { MovieInterface } from './../../../../shared/components/interfaces/movie.interface';
 import { MoviesService } from './../../../../shared/services/movies.service';
 
 @Component({
@@ -42,8 +42,6 @@ export class MoviesDetailsComponent implements OnInit {
   }
 
   navigateTo(id: number) {
-    // alert(id);
-    // this.router.navigate(['movies-details/', id]);
     this.router
       .navigateByUrl('/', { skipLocationChange: true })
       .then(() => this.router.navigate(['movies-details/', id]));

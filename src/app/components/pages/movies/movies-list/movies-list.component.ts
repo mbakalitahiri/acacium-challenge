@@ -1,28 +1,18 @@
-import { AppState } from './../../../../state/app.state';
-import {
-  selectLoading,
-  selectListItems,
-} from './../../../../state/selectors/items.selector';
-import {
-  loadItems,
-  loadedItems,
-} from './../../../../state/actions/items.actions';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  catchError,
-  filter,
-  map,
-  Observable,
-  Subject,
-  take,
-  tap,
-  of,
-  pipe,
-} from 'rxjs';
-
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MovieInterface } from '@shared/components/interfaces/movie.interface';
 import { MoviesService } from '@shared/services/movies.service';
-import { Store } from '@ngrx/store';
+import { catchError, map, Observable, of, Subject, take, tap } from 'rxjs';
+
+import {
+  loadedItems,
+  loadItems,
+} from './../../../../state/actions/items.actions';
+import { AppState } from './../../../../state/app.state';
+import {
+  selectListItems,
+  selectLoading,
+} from './../../../../state/selectors/items.selector';
 
 @Component({
   selector: 'app-movies-list',
@@ -52,7 +42,6 @@ export class MoviesListComponent implements OnInit {
     this.store.dispatch(loadItems());
     this.movies$ = this.store.select(selectListItems);
     this.getData();
-    // this.getDataFromService();
   }
 
   private getDataFromService() {
@@ -64,12 +53,10 @@ export class MoviesListComponent implements OnInit {
           this.error$.next(true);
           return of();
         }),
-        tap(console.log),
         map((value: any) => {
           this.totalPages = value['total_pages'];
           return value['results'];
         }),
-        tap(console.log),
         take(1)
       )
       .subscribe({
