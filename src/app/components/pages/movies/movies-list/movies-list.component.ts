@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './movies-list.component.html',
   styleUrls: ['./movies-list.component.scss'],
 })
-export class MoviesListComponent implements OnInit, OnDestroy {
+export class MoviesListComponent implements OnInit {
   movies: MovieInterface[] = [];
   public pageNum = 1;
   public totalPages = 0;
@@ -151,9 +151,5 @@ export class MoviesListComponent implements OnInit, OnDestroy {
         this.movies = byDate;
         break;
     }
-  }
-
-  ngOnDestroy(): void {
-    this.movies$.subscribe();
   }
 }

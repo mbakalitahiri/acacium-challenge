@@ -42,6 +42,10 @@ export class MoviesDetailsComponent implements OnInit {
   }
 
   navigateTo(id: number) {
-    this.router.navigate(['/movies-details/', id]);
+    // alert(id);
+    // this.router.navigate(['movies-details/', id]);
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate(['movies-details/', id]));
   }
 }
